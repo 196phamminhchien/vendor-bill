@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhúng Markdown Cùng Thư Mục</title>
+    <!-- Load thư viện marked từ CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #markdown-content {
+            max-width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hiển thị file Markdown</h1>
+    <div id="markdown-content"></div>
+
+    <script>
+        const markdownUrl = './README.md';
+        fetch(markdownUrl)
+            .then(response => {
+                if (!response.ok) throw new Error('Không tải được file Markdown');
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById('markdown-content').innerHTML = marked.parse(data);
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+                document.getElementById('markdown-content').innerHTML = '<p>Lỗi khi tải file Markdown. Vui lòng kiểm tra file hoặc đường dẫn.</p>';
+            });
+    </script>
+</body>
+
+</html>
